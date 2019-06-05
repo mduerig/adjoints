@@ -1,0 +1,4 @@
+.stack-work/
+adjoints.cabal
+*~
+.vscode/settings.json
