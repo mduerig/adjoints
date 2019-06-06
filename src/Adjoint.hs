@@ -5,20 +5,20 @@ module Adjoint
     ) where
 
 class (Functor l, Functor r) => Adjoint l r where
-    
+
     -- Unit and counit from natural isomorphism of hom-sets
     unit :: d -> r (l d)
-    unit = phiLeft id
+    unit = phiRight id
 
     counit :: l (r c) -> c
-    counit = phiRight id
+    counit = phiLeft id
 
     -- Natural isomorphism of hom-sets from unit and counit
-    phiLeft :: (l d -> c) -> (d -> r c)
-    phiLeft f = fmap f . unit
+    phiLeft :: (d -> r c) -> (l d -> c)
+    phiLeft f = counit . fmap f
 
-    phiRight :: (d -> r c) -> (l d -> c)
-    phiRight f = counit . fmap f
+    phiRight :: (l d -> c) -> (d -> r c)
+    phiRight f = fmap f . unit
 
 -- Triangular identities
 triLeft :: Adjoint l r => (r (l d) -> l (r (l d))) -> (d -> l d)
